@@ -794,39 +794,75 @@ const ALIASES = { work:"experience", cv:"experience", resume:"experience",
   catalyst:"textbook", textbooks:"textbook", books:"textbook", bots:"ai" };
 
 const PROJECTS = [
-  {id:"01", name:"Synapse/lab", status:"ALPHA", cls:"alpha", cmd:"open 01",
-   desc:"Learning product for neurodivergent classrooms, built on Cognitive Load Theory.",
-   meta:"product design &middot; UDL &middot; cognitive load theory &middot; 2026",
-   detail:["Founder-led product for the roughly 20% of neurodivergent learners in any classroom.",
-     "Grounded in Cognitive Load Theory and Universal Design for Learning.",
-     "Taken through user discovery, MVP launch, and live-feedback iteration."]},
-  {id:"02", name:"LearnDex", status:"ALPHA", cls:"alpha", cmd:"open 02",
-   desc:"Founder-built teaching companion generating profile-specific lesson plans.",
-   meta:"AI &middot; lesson planning &middot; accessibility &middot; founder &middot; 2026",
-   detail:["AI teaching companion that generates profile-specific, research-grounded lesson plans.",
-     "Adapts session structure, instructional sequencing, re-engagement strategy, and assessment to each learner's cognitive profile."]},
-  {id:"03", name:"Textbook prog.", status:"LIVE", cls:"live", cmd:"open 03",
-   desc:"Grades 1-5 textbook system across English, Mathematics, and EVS.",
-   meta:"curriculum &middot; InDesign &middot; Claude Cowork + Design",
-   detail:["Original Grades 1 to 5 programme, owned end to end from pedagogy to print-ready output.",
-     "Built for NEP 2020, NCF-SE 2023, and CBSE alignment.",
-     "Hands-on InDesign typesetting plus an AI-assisted production workflow. Full write-up under \\textbook."]},
-  {id:"04", name:"Tri-Axis GPT", status:"LIVE", cls:"live", cmd:"inspect 04",
-   desc:"Curriculum-evaluation bot scoring a topic against three frameworks.",
-   meta:"AI &middot; curriculum evaluation",
-   detail:["Tests a proposed syllabus topic against three distinct learning frameworks at once.",
-     "Checks it against strict, objective inclusion criteria before it earns a place in the syllabus.",
-     "Turns an instinct-led call into a structured, defensible curriculum decision."]},
-  {id:"05", name:"AI Validation", status:"LIVE", cls:"live", cmd:"open 05",
-   desc:"Model-call pipeline gating content integrity and release readiness.",
-   meta:"AI &middot; validation &middot; release gating",
-   detail:["Structured model-call pipeline scoring content for integrity, assessment alignment, schema compliance, and language quality.",
-     "Gates release readiness across curriculum-product pipelines."]},
-  {id:"06", name:"SRT Tool", status:"LIVE", cls:"live", cmd:"open 06",
-   desc:"Whisper caption pipeline for subtitles in English, Hindi, and Bengali.",
-   meta:"python &middot; whisper &middot; accessibility",
-   detail:["Python and Whisper caption pipeline.",
-     "Generates and QA-checks subtitles in English, Hindi, and Bengali, improving accessibility compliance and release scalability."]}
+  {
+    id: "01",
+    name: "Synapse/lab",
+    cmd: "open 01",
+    desc: "Learning product for neurodivergent classrooms, built on Cognitive Load Theory.",
+    meta: "product design &middot; UDL &middot; cognitive load theory &middot; 2026",
+    detail: [
+      "Founder-led product for the roughly 20% of neurodivergent learners in any classroom.",
+      "Grounded in Cognitive Load Theory and Universal Design for Learning.",
+      "Taken through user discovery, MVP launch, and live-feedback iteration."
+    ]
+  },
+  {
+    id: "02",
+    name: "LearnDex",
+    cmd: "open 02",
+    desc: "Founder-built teaching companion generating profile-specific lesson plans.",
+    meta: "AI &middot; lesson planning &middot; accessibility &middot; founder &middot; 2026",
+    detail: [
+      "AI teaching companion that generates profile-specific, research-grounded lesson plans.",
+      "Adapts session structure, instructional sequencing, re-engagement strategy, and assessment to each learner's cognitive profile."
+    ]
+  },
+  {
+    id: "03",
+    name: "Textbook prog.",
+    cmd: "open 03",
+    desc: "Grades 1-5 textbook system across English, Mathematics, and EVS.",
+    meta: "curriculum &middot; InDesign &middot; Claude Cowork + Design",
+    detail: [
+      "Original Grades 1 to 5 programme, owned end to end from pedagogy to print-ready output.",
+      "Built for NEP 2020, NCF-SE 2023, and CBSE alignment.",
+      "Hands-on InDesign typesetting plus an AI-assisted production workflow. Full write-up under \\textbook."
+    ]
+  },
+  {
+    id: "04",
+    name: "Tri-Axis GPT",
+    cmd: "inspect 04",
+    desc: "Curriculum-evaluation bot scoring a topic against three frameworks.",
+    meta: "AI &middot; curriculum evaluation",
+    detail: [
+      "Tests a proposed syllabus topic against three distinct learning frameworks at once.",
+      "Checks it against strict, objective inclusion criteria before it earns a place in the syllabus.",
+      "Turns an instinct-led call into a structured, defensible curriculum decision."
+    ]
+  },
+  {
+    id: "05",
+    name: "AI Validation",
+    cmd: "open 05",
+    desc: "Model-call pipeline gating content integrity and release readiness.",
+    meta: "AI &middot; validation &middot; release gating",
+    detail: [
+      "Structured model-call pipeline scoring content for integrity, assessment alignment, schema compliance, and language quality.",
+      "Gates release readiness across curriculum-product pipelines."
+    ]
+  },
+  {
+    id: "06",
+    name: "SRT Tool",
+    cmd: "open 06",
+    desc: "Whisper caption pipeline for subtitles in English, Hindi, and Bengali.",
+    meta: "python &middot; whisper &middot; accessibility",
+    detail: [
+      "Python and Whisper caption pipeline.",
+      "Generates and QA-checks subtitles in English, Hindi, and Bengali, improving accessibility compliance and release scalability."
+    ]
+  }
 ];
 
 const DESC = {
