@@ -567,7 +567,7 @@ const sections = {
         <div class="h">ID</div><div class="h">PROJECT</div><div class="h ds-h">DESCRIPTION</div><div class="h">ACTION</div>
         ${PROJECTS.map(p=>`
           <div class="cell id">[${p.id}]</div>
-          <div class="cell nm">${p.name} <span class="status ${p.cls}">${p.status}</span></div>
+          <div class="cell nm">${p.name}</div>
           <div class="cell ds">${p.desc}</div>
           <div class="cell cmd"><span class="cmdlink" data-cmd="${p.cmd}">\\${p.cmd}</span></div>
         `).join("")}
@@ -797,8 +797,6 @@ const PROJECTS = [
   {
     id: "01",
     name: "Synapse/lab",
-    status: "",
-    cls: "",
     cmd: "open 01",
     desc: "Learning product for neurodivergent classrooms, built on Cognitive Load Theory.",
     meta: "product design &middot; UDL &middot; cognitive load theory &middot; 2026",
@@ -811,8 +809,6 @@ const PROJECTS = [
   {
     id: "02",
     name: "LearnDex",
-    status: "",
-    cls: "",
     cmd: "open 02",
     desc: "Founder-built teaching companion generating profile-specific lesson plans.",
     meta: "AI &middot; lesson planning &middot; accessibility &middot; founder &middot; 2026",
@@ -824,8 +820,6 @@ const PROJECTS = [
   {
     id: "03",
     name: "Textbook prog.",
-    status: "",
-    cls: "",
     cmd: "open 03",
     desc: "Grades 1-5 textbook system across English, Mathematics, and EVS.",
     meta: "curriculum &middot; InDesign &middot; Claude Cowork + Design",
@@ -838,8 +832,6 @@ const PROJECTS = [
   {
     id: "04",
     name: "Tri-Axis GPT",
-    status: "",
-    cls: "",
     cmd: "inspect 04",
     desc: "Curriculum-evaluation bot scoring a topic against three frameworks.",
     meta: "AI &middot; curriculum evaluation",
@@ -852,8 +844,6 @@ const PROJECTS = [
   {
     id: "05",
     name: "AI Validation",
-    status: "",
-    cls: "",
     cmd: "open 05",
     desc: "Model-call pipeline gating content integrity and release readiness.",
     meta: "AI &middot; validation &middot; release gating",
@@ -865,8 +855,6 @@ const PROJECTS = [
   {
     id: "06",
     name: "SRT Tool",
-    status: "",
-    cls: "",
     cmd: "open 06",
     desc: "Whisper caption pipeline for subtitles in English, Hindi, and Bengali.",
     meta: "python &middot; whisper &middot; accessibility",
@@ -1092,7 +1080,7 @@ function openProject(id, typed){
   if(!p){ paint(typed, errHtml(`no project <b>${escapeHtml(id)}</b>. try \\open 01 through \\open 06.`), null); return; }
   const html = `
     <div class="ln kicker">~/projects/id_${p.id}</div>
-    <div class="htitle ln">${p.name} <span class="status ${p.cls}">${p.status}</span></div>
+    <div class="htitle ln">${p.name}</div>
     <div class="ln" style="color:var(--dimmer);font-size:13px;margin-bottom:16px">${p.meta}</div>
     ${SEP("-")}
     <ul class="term ln">${p.detail.map(d=>`<li>${d}</li>`).join("")}</ul>
