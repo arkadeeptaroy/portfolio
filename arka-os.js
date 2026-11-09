@@ -31,7 +31,7 @@
     const flow=FOCUS_ITEMS.map((f,i)=>'<button type="button" class="ark-pipeline-node'+(i===0?' selected':'')+'" data-ark-focus="'+i+'" aria-pressed="'+(i===0?'true':'false')+'"><span>'+String(i+1).padStart(2,'0')+'</span><strong>'+escape(f.title)+'</strong><small>'+escape(f.short)+'</small></button>').join('');
     const selected=FOCUS_ITEMS[0];
     return '<div class="ark-command-center" aria-label="ARKA.OS product-management command center">'+
-      '<header class="ark-menubar"><div class="ark-menubar-id"><span class="ark-mini-logo" aria-hidden="true">A</span><strong>ARKA.OS</strong><span class="ark-menu-divider">/</span><span>PORTFOLIO</span></div>'+
+      '<header class="ark-menubar"><div class="ark-menubar-id"><span class="ark-mini-logo" aria-hidden="true">a</span><strong>ARKA.OS</strong><span class="ark-menu-divider">/</span><span>PORTFOLIO</span></div>'+
       '<div class="ark-menubar-right"><span class="ark-visit-label">SITE VISITS <strong id="arkVisitNumber" aria-live="polite">Loading</strong></span>'+
       '<span class="ark-menubar-sep" aria-hidden="true"></span><span class="ark-session-time" id="arkSessionTime" aria-label="Current session duration">00:00</span>'+
       '<span class="ark-menubar-sep" aria-hidden="true"></span><span class="ark-local-clock" id="osDesktopClock">--:--</span></div></header>'+
@@ -40,7 +40,7 @@
       '<div class="ark-terminal-body"><div class="ark-boot-line"><span class="ark-ansi-green">✓</span> portfolio profile loaded &nbsp; <span class="ark-ansi-dim">/</span> 2026</div>'+
       '<div class="ark-shell-command"><span class="ark-shell-prompt">arka@os</span><span class="ark-shell-colon">:</span><span class="ark-shell-path">~</span><span class="ark-shell-dollar">$</span> neofetch</div>'+
       '<div class="ark-neofetch" role="group" aria-label="Neofetch-style professional profile">'+
-      '<div class="ark-fetch-art"><pre class="ark-fetch-ascii" aria-label="Green A-shaped ASCII art for arka.os">'+escape(ARKA_ASCII)+'</pre><div class="ark-fetch-brand">arka<span>.os</span></div></div>'+
+      '<div class="ark-fetch-art"><pre class="ark-fetch-ascii" aria-label="Green lowercase a in ASCII art for arka.os">'+escape(ARKA_ASCII)+'</pre><div class="ark-fetch-brand">arka<span>.os</span></div></div>'+
       '<div class="ark-fetch-info"><div class="ark-fetch-user">arka<span>@</span>os</div><div class="ark-fetch-dashes" aria-hidden="true"></div>'+
       '<dl class="ark-fetch-specs">'+
       '<div><dt>Owner</dt><dd>Arkadeepta Roy</dd></div>'+
