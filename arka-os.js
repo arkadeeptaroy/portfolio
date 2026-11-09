@@ -49,7 +49,6 @@
       '<div><dt>Focus</dt><dd>Discovery / roadmap / delivery</dd></div>'+
       '<div><dt>Builds</dt><dd>AI workflows / learning products / SaaS</dd></div>'+
       '<div><dt>Experience</dt><dd>7+ years in education</dd></div>'+
-      '<div><dt>Independent</dt><dd>Synapse/lab · LearnDex</dd></div>'+
       '<div><dt>Portfolio</dt><dd>8 documented projects</dd></div>'+
       '<div><dt>Shell</dt><dd>Portfolio CLI</dd></div>'+
       '</dl></div></div>'+

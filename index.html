@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-GB" data-build="2026-11-09-clean-intro">
+<html lang="en-GB" data-build="2026-11-09-product-only-boot">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -1760,7 +1760,7 @@ html[data-intro="open"] .intro-gate{display:flex}
   },true);
 })();
 </script>
-  <link rel="stylesheet" href="arka-os.css?v=11.0.4">
+  <link rel="stylesheet" href="arka-os.css?v=11.0.5">
 </head>
 <body>
 <div class="intro-gate" id="introGate" role="dialog" aria-modal="true" aria-labelledby="introTitle" aria-hidden="true" data-booting="false">
@@ -1778,29 +1778,44 @@ html[data-intro="open"] .intro-gate{display:flex}
     </div>
     <div class="intro-boot" id="introBoot" aria-hidden="true">
       <div class="intro-boot-console">
-        <div class="intro-boot-top"><span>ARKA.OS / BOOT</span><span>TTY 01</span></div>
-        <pre class="intro-boot-mark" aria-hidden="true">                   -`
-                  .o+`
-                 `ooo/
-                `+oooo:
-               `+oooooo:
-               -+oooooo+:
-             `/:-:++oooo+:
-            `/++++/+++++++:
-           `/++++++++++++++:
-          `/+++ooooooooooooo/`
-         ./ooosssso++osssssso+`
-        .oossssso-````/ossssss+`
-       -osssssso.      :ssssssso.
-      :osssssss/        osssso+++.
-     /ossssssss/        +ssssooo/-
-   `/ossssso+/:-        -:/+osssso+-
-  `+sso+:-`                 `.-/+oso:
- `++:.                           `-/+/
- .`                                 `/ </pre>
-        <div class="intro-boot-status" id="introBootStatus" role="status" aria-live="polite">BOOTING ARKA.OS</div>
+        <div class="intro-boot-top">
+          <span><span class="intro-boot-light" aria-hidden="true"></span> ARKA.OS <span class="intro-boot-top-muted">/ BOOT SEQUENCE</span></span>
+          <span>tty1 &nbsp; ● &nbsp; product</span>
+        </div>
+        <div class="intro-boot-layout">
+          <div class="intro-boot-identity">
+            <pre class="intro-boot-mark" aria-hidden="true">                ██████
+               ██    ██
+              ██      ██
+             ██        ██
+            ██          ██
+           ██            ██
+          ██              ██
+         ██                ██
+        ██████████████████████
+       ██                    ██
+      ██                      ██
+     ██                        ██
+    ██                          ██
+   ██                            ██
+  ██                              ██
+ ██                                ██
+██                                  ██
+██                                  ██</pre>
+            <div class="intro-boot-brand">ARKA<span>.OS</span><small>PERSONAL PORTFOLIO SYSTEM</small></div>
+          </div>
+          <div class="intro-boot-log" aria-hidden="true">
+            <div class="intro-boot-log-title">:: system initialisation</div>
+            <div class="intro-boot-log-line"><span class="intro-boot-ok">[ OK ]</span><span>Mount product workspace</span></div>
+            <div class="intro-boot-log-line"><span class="intro-boot-ok">[ OK ]</span><span>Load case studies and outcomes</span></div>
+            <div class="intro-boot-log-line"><span class="intro-boot-ok">[ OK ]</span><span>Resolve skills and experience</span></div>
+            <div class="intro-boot-log-line"><span class="intro-boot-ok">[ OK ]</span><span>Start portfolio shell</span></div>
+            <div class="intro-boot-log-prompt"><span>arka@os</span>:~$ startx <span class="intro-boot-log-cursor">█</span></div>
+          </div>
+        </div>
+        <div class="intro-boot-progress-heading"><span class="intro-boot-status" id="introBootStatus" role="status" aria-live="polite">STARTING PRODUCT WORKSPACE</span><span>ARKA / 01</span></div>
         <div class="intro-boot-progress" aria-hidden="true"><span></span></div>
-        <div class="intro-boot-hint">INITIALISING PORTFOLIO <span class="intro-boot-cursor">█</span></div>
+        <div class="intro-boot-hint">INITIALISING PRODUCT MANAGER INTERFACE <span class="intro-boot-cursor">_</span></div>
       </div>
     </div>
   </div>
@@ -1909,7 +1924,7 @@ html[data-intro="open"] .intro-gate{display:flex}
 <script>
 "use strict";
 
-const NAME_ASCII=["                   -`","                  .o+`","                 `ooo/","                `+oooo:","               `+oooooo:","               -+oooooo+:","             `/:-:++oooo+:","            `/++++/+++++++:","           `/++++++++++++++:","          `/+++ooooooooooooo/`","         ./ooosssso++osssssso+`","        .oossssso-````/ossssss+`","       -osssssso.      :ssssssso.","      :osssssss/        osssso+++.","     /ossssssss/        +ssssooo/-","   `/ossssso+/:-        -:/+osssso+-","  `+sso+:-`                 `.-/+oso:"," `++:.                           `-/+/"," .`                                 `/ "].join("\n");
+const NAME_ASCII=["                ██████","               ██    ██","              ██      ██","             ██        ██","            ██          ██","           ██            ██","          ██              ██","         ██                ██","        ██████████████████████","       ██                    ██","      ██                      ██","     ██                        ██","    ██                          ██","   ██                            ██","  ██                              ██"," ██                                ██","██                                  ██","██                                  ██"].join("\n");
 
 const DEFAULT_PREFS={theme:"green",crt:"off",motion:"on",font:"normal",interface:"distro",sfx:"on",chalk:"on"};
 const THEMES={green:{bg:"#050706",note:"green"}};
@@ -2772,27 +2787,23 @@ function closeIntro(){
   if(shell){shell.inert=false;shell.removeAttribute("aria-hidden")}
 }
 let introBooting=false;
-function runIntroBoot(label,complete){
+function runIntroBoot(complete){
   if(introBooting)return;
   const panel=document.getElementById("introBoot");
   if(!introGate||!panel||reducedMotion()){
-    if(introGate)introGate.dataset.booting="false";
-    if(panel)panel.setAttribute("aria-hidden","true");
     complete();
     return;
   }
   introBooting=true;
   const status=document.getElementById("introBootStatus");
-  const hint=panel.querySelector(".intro-boot-hint");
   introGate.dataset.booting="false";
   void panel.offsetWidth;
   introGate.dataset.booting="true";
   introGate.setAttribute("aria-busy","true");
   panel.setAttribute("aria-hidden","false");
   introChoices.forEach(button=>{button.disabled=true});
-  if(status)status.textContent="LOADING "+label+"...";
-  if(hint)hint.firstChild.textContent="INITIALISING "+label+" ";
-  setTimeout(()=>{if(status)status.textContent="READY / "+label},720);
+  if(status)status.textContent="STARTING PRODUCT WORKSPACE";
+  setTimeout(()=>{if(status)status.textContent="PRODUCT WORKSPACE READY";},1450);
   setTimeout(()=>{
     introGate.dataset.booting="false";
     introGate.removeAttribute("aria-busy");
@@ -2800,20 +2811,18 @@ function runIntroBoot(label,complete){
     introChoices.forEach(button=>{button.disabled=false});
     introBooting=false;
     complete();
-  },1200);
+  },1900);
 }
 function chooseIntro(interfaceName){
   if(introBooting||!["distro","greenboard"].includes(interfaceName))return;
   ssSet("arka_gear_discovered","1");lsSet("arka_gear_discovered","1");
-  const label=interfaceName==="distro"?"PRODUCT VIEW":"EDUCATOR VIEW";
-  runIntroBoot(label,()=>{
+  const openWorkspace=()=>{
     closeIntro();
     setInterface(interfaceName,{announce:false});
     requestAnimationFrame(()=>viewport?.focus());
-  });
-}
-function startIntroBoot(){
-  runIntroBoot("ARKA.OS",()=>introChoices[0]?.focus());
+  };
+  if(interfaceName==="distro")runIntroBoot(openWorkspace);
+  else openWorkspace();
 }
 function openIntroIfNeeded(){
   if(!introIsOpen())return false;introGate?.setAttribute("aria-hidden","false");
@@ -2828,7 +2837,7 @@ function init(){
   introChoices.forEach(b=>b.addEventListener("click",()=>chooseIntro(b.dataset.introInterface)));
   introGate?.addEventListener("keydown",e=>{if(e.key==="Escape"){e.preventDefault();return}trapFocus(e,introGate,()=>{})});
   const introOpened=openIntroIfNeeded();
-  if(introOpened)startIntroBoot();
+  if(introOpened)requestAnimationFrame(()=>introChoices[0]?.focus());
   uiSwitchToggle?.addEventListener("click",e=>{
     e.stopPropagation();if(BOARD_HANDHELD)restBoardTools();dismissGearDiscovery();const open=uiSwitcher?.dataset.open!=="true";
     if(uiSwitcher)uiSwitcher.dataset.open=open?"true":"false";uiSwitchToggle.setAttribute("aria-expanded",open?"true":"false");uiSwitchMenu?.setAttribute("aria-hidden",open?"false":"true");
@@ -2847,6 +2856,6 @@ function init(){
 }
 init();
 </script>
-  <script src="arka-os.js?v=11.0.3"></script>
+  <script src="arka-os.js?v=11.0.5"></script>
 </body>
 </html>
