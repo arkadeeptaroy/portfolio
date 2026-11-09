@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-GB" data-build="2026-11-09-lowercase-ascii-neofetch">
+<html lang="en-GB" data-build="2026-11-09-mobile-navigation-repair">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -1726,9 +1726,10 @@ html[data-intro="open"] .intro-gate{display:flex}
 <script>
 (function(){
   try{
-    const ua=navigator.userAgent||"";
-    const ios=/iPad|iPhone|iPod/.test(ua)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
-    const touch=(window.matchMedia&&window.matchMedia("(pointer: coarse)").matches)||navigator.maxTouchPoints>0;
+    const browser=window.navigator;
+    const ua=browser.userAgent||"";
+    const ios=/iPad|iPhone|iPod/.test(ua)||(browser.platform==="MacIntel"&&browser.maxTouchPoints>1);
+    const touch=(window.matchMedia&&window.matchMedia("(pointer: coarse)").matches)||browser.maxTouchPoints>0;
     document.documentElement.dataset.boardEngine=(touch&&!ios)?"svg":"canvas";
     document.documentElement.dataset.intro=(function(){
   const path=(location.hash||"").split("?")[0];
@@ -1743,12 +1744,14 @@ html[data-intro="open"] .intro-gate{display:flex}
      Greenboard/document pointer handlers. Until a choice is made, the only
      pointer targets allowed through are the two audience buttons. */
   const introOpen=()=>document.documentElement.dataset.intro==="open";
+  const insideIntro=t=>!!(t&&document.getElementById("introGate")?.contains(t));
   const isChoiceTarget=t=>!!(t&&t.closest&&t.closest("[data-intro-interface]"));
   const block=e=>{if(e.cancelable)e.preventDefault();e.stopImmediatePropagation();e.stopPropagation()};
-  ["pointermove","mousemove","touchmove","wheel","contextmenu"].forEach(type=>
-    document.addEventListener(type,e=>{if(introOpen())block(e)},true)
+  // Let the dialog scroll on short mobile screens, but never pass events to the workspace.
+  ["pointermove","mousemove","touchmove","wheel","pointerdown","pointerup","mousedown","mouseup","touchstart","touchend"].forEach(type=>
+    document.addEventListener(type,e=>{if(introOpen()&&!insideIntro(e.target))block(e)},true)
   );
-  ["pointerdown","pointerup","mousedown","mouseup","touchstart","touchend","click"].forEach(type=>
+  ["click","contextmenu"].forEach(type=>
     document.addEventListener(type,e=>{if(introOpen()&&!isChoiceTarget(e.target))block(e)},true)
   );
   document.addEventListener("keydown",e=>{
@@ -2245,7 +2248,7 @@ const CMDS=[...NAV_KEYS,"design"];
 const UTIL_CMDS=["ls","tree","status","open","whoami","interface","ui","chalk","sfx","duster","wipe","font","reset","clear","help","design"];
 
 const viewport=document.getElementById("viewport");
-const navigator=document.getElementById("navigator");
+const navigationEl=document.getElementById("navigator");
 const cwd=document.getElementById("cwd");
 const routeStat=document.getElementById("routeStat");
 const sessionCount=document.getElementById("sessionCount");
@@ -2293,9 +2296,9 @@ NAV_GROUPS.forEach(group=>{
     const b=document.createElement("button");b.type="button";b.className="nav-item";b.dataset.route=key;b.dataset.key=key;
     b.innerHTML=`<span class="node">${i===group.items.length-1?"└─":"├─"}</span><span class="path">${modeLabel(key)}</span>`;
     wrap.appendChild(b);
-  });navigator.appendChild(wrap);
+  });navigationEl.appendChild(wrap);
 });
-const navHelp=document.createElement("div");navHelp.className="nav-help";navHelp.innerHTML='<span>Ctrl K</span> explore<br><span>Ctrl + `</span> terminal<br><span>help</span> manual';navigator.appendChild(navHelp);
+const navHelp=document.createElement("div");navHelp.className="nav-help";navHelp.innerHTML='<span>Ctrl K</span> explore<br><span>Ctrl + `</span> terminal<br><span>help</span> manual';navigationEl.appendChild(navHelp);
 
 function ssGet(key){try{return sessionStorage.getItem(key)}catch(e){return null}}
 function ssSet(key,value){try{sessionStorage.setItem(key,value)}catch(e){}}
@@ -2323,9 +2326,9 @@ function setBoardPref(name,value){if(!["on","off"].includes(value))return;PREFS[
 
 let chalkCtx=null,chalkDrawing=false,chalkPointer=null,chalkLast=null,chalkLastTime=0,chalkWidth=4.6;
 const INTERACTIVE_SELECTOR='button,a,input,textarea,select,[role="button"],[data-cmd],[data-route],[data-interface-option]';
-const BOARD_UA=navigator.userAgent||"";
-const BOARD_IOS=/iPad|iPhone|iPod/.test(BOARD_UA)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
-const BOARD_TOUCH=(window.matchMedia&&window.matchMedia("(pointer: coarse)").matches)||navigator.maxTouchPoints>0;
+const BOARD_UA=window.navigator.userAgent||"";
+const BOARD_IOS=/iPad|iPhone|iPod/.test(BOARD_UA)||(window.navigator.platform==="MacIntel"&&window.navigator.maxTouchPoints>1);
+const BOARD_TOUCH=!!((window.matchMedia&&window.matchMedia("(pointer: coarse)").matches)||window.navigator.maxTouchPoints>0);
 const BOARD_HANDHELD=!!(BOARD_TOUCH&&window.matchMedia&&(window.matchMedia("(hover: none)").matches||window.matchMedia("(max-width: 1024px)").matches));
 const BOARD_SVG=document.documentElement.dataset.boardEngine==="svg";
 const BOARD_LITE=BOARD_SVG;
@@ -2516,11 +2519,13 @@ function flushMobileDuster(){
   eraseDusterSegment(dusterLast,s.p);modulateDusterSound(speed);dusterLast=s.p;dusterLastTime=s.time;
 }
 function beginDuster(e){
+  if(introIsOpen())return false;
   if(!dusterHeld||PREFS.interface!=="greenboard"||!e.isPrimary)return false;if(isInteractiveTarget(e.target)||e.target===boardDuster||e.target.closest?.("#uiSwitcher"))return false;
   refreshBoardRect();const p=pointOnBoard(e);if(!p)return false;e.preventDefault();e.stopPropagation();dusterErasing=true;dusterPointer=e.pointerId;dusterLast=p;dusterLastTime=e.timeStamp||performance.now();pendingDuster=null;
   startDusterSound();eraseAtPoint(p);return true;
 }
 function moveDuster(e){
+  if(introIsOpen())return false;
   if(BOARD_HANDHELD&&dusterHeld)armToolIdle();showDusterCursor(e);if(!dusterErasing||e.pointerId!==dusterPointer)return false;e.preventDefault();e.stopPropagation();const p=pointOnBoard(e);if(!p)return true;
   const t=e.timeStamp||performance.now();
   if(BOARD_LITE){pendingDuster={p,time:t};if(!dusterFrame)dusterFrame=requestAnimationFrame(flushMobileDuster);return true}
@@ -2550,10 +2555,12 @@ function flushMobileChalk(){
   const speed=dist/dt*1000;drawChalkSegment(chalkLast,s.p,s.pressure,speed);modulateChalkSound(speed,s.pressure);chalkLast=s.p;chalkLastTime=s.time;
 }
 function beginChalk(e){
+  if(introIsOpen())return;
   if(dusterHeld||!chalkHeld||PREFS.interface!=="greenboard"||PREFS.chalk!=="on"||!e.isPrimary||isInteractiveTarget(e.target))return;
   refreshBoardRect();const p=pointOnBoard(e);if(!p)return;e.preventDefault();document.body.classList.add("chalk-hover");chalkDrawing=true;chalkPointer=e.pointerId;chalkLast=p;chalkLastTime=e.timeStamp||performance.now();chalkWidth=4.6;pendingChalk=null;startChalkSound();drawChalkSegment({x:p.x-.35,y:p.y-.35},{x:p.x+.35,y:p.y+.35},e.pressure||.5,0)
 }
 function moveChalk(e){
+  if(introIsOpen())return;
   if(BOARD_HANDHELD&&chalkHeld)armToolIdle();updateChalkPointer(e);if(!chalkDrawing||e.pointerId!==chalkPointer)return;e.preventDefault();
   if(BOARD_LITE){
     const raw=(typeof e.getCoalescedEvents==="function")?e.getCoalescedEvents():null;const ev=(raw&&raw.length)?raw[raw.length-1]:e;const p=pointOnBoard(ev);if(!p)return;
@@ -2614,14 +2621,17 @@ function routePath(key,arg){
 function routeHash(key,arg){if(key==="project")return `#/projects/${String(arg).padStart(2,"0")}`;if(key==="projects"&&arg&&arg!=="all")return `#/projects?filter=${encodeURIComponent(arg)}`;return `#/${key}`}
 function parseHash(){
   const raw=location.hash.replace(/^#\/?/,"")||"home";
-  if(/^projects\/\d+$/.test(raw)){return{key:"project",arg:raw.split("/")[1]}}
+  if(/^projects\/\d+$/.test(raw)){
+    const id=raw.split("/")[1].padStart(2,"0");
+    return PROJECTS.some(p=>p.id===id)?{key:"project",arg:id}:{key:"projects",arg:"all"};
+  }
   const [path,q]=raw.split("?");const params=new URLSearchParams(q||"");
   if(path==="projects")return{key:"projects",arg:params.get("filter")||"all"};
   return{key:sections[path]?path:"home",arg:null};
 }
 function setActive(key){
-  navigator.querySelectorAll(".nav-item").forEach(b=>b.classList.toggle("active",b.dataset.key===key||(key==="project"&&b.dataset.key==="projects")));
-  mobileDistroNav?.querySelectorAll("[data-mobile-key]").forEach(b=>{const k=b.dataset.mobileKey;b.classList.toggle("active",k===key||(key==="project"&&k==="projects"))});
+  navigationEl.querySelectorAll(".nav-item").forEach(b=>b.classList.toggle("active",b.dataset.key===key||(key==="project"&&b.dataset.key==="projects")));
+  mobileDistroNav?.querySelectorAll("[data-mobile-key]").forEach(b=>{const k=b.dataset.mobileKey;const active=k===key||(key==="project"&&k==="projects");b.classList.toggle("active",active);if(active)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current")});
 }
 function updateDocumentTitle(key,arg){
   if(key==="home"){document.title=isGreenboard()?"Arkadeepta // Greenboard":"arka.os // Arkadeepta Roy";return}
@@ -2646,7 +2656,13 @@ function navigate(route,{replace=false,typed=null,fromPop=false}={}){
   setRouteUI(current.key,current.arg);
   if(!fromPop)pushRoute(current.key,current.arg,replace);if(!["settings","help","design"].includes(current.key))ssSet("arka_last_route",JSON.stringify(current));
 }
-window.addEventListener("popstate",()=>navigate(parseHash(),{fromPop:true,typed:"route"}));
+function syncLocationRoute(){
+  const next=parseHash();
+  if(current.key===next.key&&(current.arg||null)===(next.arg||null))return;
+  navigate(next,{fromPop:true,typed:"route"});
+}
+window.addEventListener("popstate",syncLocationRoute);
+window.addEventListener("hashchange",syncLocationRoute);
 
 function openProject(id,typed,internal=false){
   const pid=String(id||"").padStart(2,"0");const p=PROJECTS.find(x=>x.id===pid);
