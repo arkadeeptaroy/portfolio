@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-GB" data-build="2026-11-09-mobile-navigation-repair">
+<html lang="en-GB" data-build="2026-11-09-mobile-layout-repair">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -1627,11 +1627,11 @@ html[data-intro="open"] .intro-gate{display:flex}
 /* ================= V6.7 MOBILE DISTRO ================= */
 @media(max-width:700px){
   html[data-interface="distro"] body{overflow:hidden;background:#050906}
-  html[data-interface="distro"] .shell{grid-template-rows:minmax(0,1fr);height:100%;min-height:100%;background:#050906}
+  html[data-interface="distro"] .shell{grid-template-rows:minmax(0,1fr);height:100%;min-height:100%;padding-top:env(safe-area-inset-top);background:#050906}
   html[data-interface="distro"] .desktop{padding:0;height:100%;min-height:0;display:block}
   html[data-interface="distro"] .window-frame{
     width:100%;height:100%;min-height:0;border:0!important;border-radius:0!important;box-shadow:none!important;backdrop-filter:none!important;
-    display:grid;grid-template-rows:54px minmax(0,1fr) 64px!important;background:#050906!important;overflow:hidden
+    display:grid;grid-template-rows:52px minmax(0,1fr) auto!important;background:#050906!important;overflow:hidden
   }
   html[data-interface="distro"] .window-titlebar,
   html[data-interface="distro"] .pane-bar,
@@ -1699,7 +1699,7 @@ html[data-intro="open"] .intro-gate{display:flex}
   html[data-interface="distro"] .boot-index{min-width:31px}
   html[data-interface="distro"] .desktop-shortcuts{display:none!important}
   html[data-interface="distro"] .mobile-distro-nav{
-    display:grid;grid-template-columns:repeat(5,1fr);align-items:stretch;background:#07100b;border-top:1px solid rgba(124,255,139,.10);
+    display:grid;grid-template-columns:repeat(5,minmax(0,1fr));align-items:stretch;min-height:calc(64px + env(safe-area-inset-bottom));background:#07100b;border-top:1px solid rgba(124,255,139,.10);
     padding:6px max(7px,env(safe-area-inset-right)) calc(6px + env(safe-area-inset-bottom)) max(7px,env(safe-area-inset-left));z-index:25
   }
   html[data-interface="distro"] .mobile-distro-nav button{
@@ -1718,7 +1718,7 @@ html[data-intro="open"] .intro-gate{display:flex}
   html[data-interface="distro"] .launcher-result{grid-template-columns:70px minmax(0,1fr)!important;min-height:51px;padding:10px!important}
   html[data-interface="distro"] .launcher-result .meta{display:none!important}
   html[data-interface="distro"] .activities-foot{display:none!important}
-  html[data-interface="distro"] .ui-switcher{right:8px!important;top:27px!important;transform:none!important;z-index:130}
+  html[data-interface="distro"] .ui-switcher{right:10px!important;top:calc(env(safe-area-inset-top) + 8px)!important;transform:none!important;z-index:130}
   html[data-interface="distro"] .ui-switch-toggle{width:36px!important;height:36px!important}
   html[data-interface="distro"] .ui-switch-menu{right:42px!important;top:18px!important;transform:none!important}
 }
@@ -1763,7 +1763,7 @@ html[data-intro="open"] .intro-gate{display:flex}
   },true);
 })();
 </script>
-  <link rel="stylesheet" href="arka-os.css?v=20261109-final-lowercase-a">
+  <link rel="stylesheet" href="arka-os.css?v=20261109-mobile-stable">
 </head>
 <body>
 <div class="intro-gate" id="introGate" role="dialog" aria-modal="true" aria-labelledby="introTitle" aria-hidden="true" data-booting="false">
