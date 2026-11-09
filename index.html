@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-GB" data-build="2026-11-09-mobile-layout-repair">
+<html lang="en-GB" data-build="2026-11-09-maintenance">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -46,14 +46,6 @@
   --font-size:14px;
   --nav-width:228px;
   --scan:.16;
-}
-html[data-theme="amber"]{--phosphor:#ffb84f;--phosphor-dim:#7a5423;--cyan:#ffd79c;--amber:#ff9f6a;--sel:#4c351c}
-html[data-theme="ice"]{--phosphor:#70d9ff;--phosphor-dim:#235e75;--cyan:#aadfff;--amber:#e8bc70;--sel:#173846}
-html[data-theme="mono"]{--phosphor:#eeeeee;--phosphor-dim:#666;--cyan:#c9c9c9;--amber:#a9a9a9;--sel:#303030}
-html[data-theme="paper"]{
-  --bg:#eeece4;--bg-2:#e8e5dc;--panel:#f5f3ec;--panel-2:#ebe7dd;--soft:#e2ded3;
-  --line:#c8c2b3;--line-strong:#aaa392;--fg:#1d211e;--text:#333934;--muted:#686d68;--faint:#989b95;
-  --phosphor:#286a35;--phosphor-dim:#93b09a;--cyan:#1c6470;--amber:#8a5d10;--red:#b3261e;--sel:#cde0cf;--scan:.04;
 }
 html[data-font="small"]{--font-size:13px}
 html[data-font="large"]{--font-size:16px}
@@ -1763,7 +1755,7 @@ html[data-intro="open"] .intro-gate{display:flex}
   },true);
 })();
 </script>
-  <link rel="stylesheet" href="arka-os.css?v=20261109-mobile-stable">
+  <link rel="stylesheet" href="arka-os.css?v=20261109-maintenance">
 </head>
 <body>
 <div class="intro-gate" id="introGate" role="dialog" aria-modal="true" aria-labelledby="introTitle" aria-hidden="true" data-booting="false">
@@ -1921,7 +1913,6 @@ function applyPrefs(){
   const r=document.documentElement;
   r.dataset.theme=PREFS.theme;r.dataset.crt=PREFS.crt;r.dataset.motion=PREFS.motion;r.dataset.font=PREFS.font;r.dataset.interface=PREFS.interface;r.dataset.sfx=PREFS.sfx;r.dataset.chalk=PREFS.chalk;
   document.getElementById("metatheme").setAttribute("content",PREFS.interface==="greenboard"?"#183d2f":THEMES[PREFS.theme].bg);
-  const themeStat=document.getElementById("themeStat"),motionStat=document.getElementById("motionStat");if(themeStat)themeStat.textContent=PREFS.theme;if(motionStat)motionStat.textContent=PREFS.motion;
   const iface=document.getElementById("interfaceStat");if(iface)iface.textContent=PREFS.interface;
   document.querySelectorAll("[data-interface-option]").forEach(b=>{const on=b.dataset.interfaceOption===PREFS.interface;b.classList.toggle("active",on);b.setAttribute("aria-pressed",on?"true":"false")});
   document.querySelectorAll(".nav-group-label[data-group]").forEach(el=>{el.textContent=modeGroupLabel(el.dataset.group)});document.querySelectorAll(".nav-item[data-key]").forEach(b=>{const p=b.querySelector(".path");if(p)p.textContent=modeLabel(b.dataset.key)});
@@ -2251,16 +2242,13 @@ const viewport=document.getElementById("viewport");
 const navigationEl=document.getElementById("navigator");
 const cwd=document.getElementById("cwd");
 const routeStat=document.getElementById("routeStat");
-const sessionCount=document.getElementById("sessionCount");
 const input=document.getElementById("cmdinput");
 const form=document.getElementById("cmdform");
 const runbtn=document.getElementById("runbtn");
 const suggest=document.getElementById("suggest");
 const cursor=document.getElementById("cursor");
 const measurer=document.getElementById("measurer");
-const appTitle=document.getElementById("appTitle");
 const windowPath=document.getElementById("windowPath");
-const activitiesBtn=document.getElementById("activitiesBtn");
 const statusActivities=document.getElementById("statusActivities");
 const activitiesClose=document.getElementById("activitiesClose");
 const activitiesOverlay=document.getElementById("activitiesOverlay");
@@ -2305,7 +2293,7 @@ function ssSet(key,value){try{sessionStorage.setItem(key,value)}catch(e){}}
 function lsGet(key){try{return localStorage.getItem(key)}catch(e){return null}}
 function lsSet(key,value){try{localStorage.setItem(key,value)}catch(e){}}
 let current={key:"home",arg:null};
-let sessionN=Number(ssGet("arka_session")||0);if(sessionCount)sessionCount.textContent=String(sessionN).padStart(2,"0");
+let sessionN=Number(ssGet("arka_session")||0);
 let cmdHistory=[];try{cmdHistory=JSON.parse(ssGet("arka_history"))||[]}catch(e){}let histIndex=cmdHistory.length;
 
 
@@ -2327,7 +2315,6 @@ function setBoardPref(name,value){if(!["on","off"].includes(value))return;PREFS[
 let chalkCtx=null,chalkDrawing=false,chalkPointer=null,chalkLast=null,chalkLastTime=0,chalkWidth=4.6;
 const INTERACTIVE_SELECTOR='button,a,input,textarea,select,[role="button"],[data-cmd],[data-route],[data-interface-option]';
 const BOARD_UA=window.navigator.userAgent||"";
-const BOARD_IOS=/iPad|iPhone|iPod/.test(BOARD_UA)||(window.navigator.platform==="MacIntel"&&window.navigator.maxTouchPoints>1);
 const BOARD_TOUCH=!!((window.matchMedia&&window.matchMedia("(pointer: coarse)").matches)||window.navigator.maxTouchPoints>0);
 const BOARD_HANDHELD=!!(BOARD_TOUCH&&window.matchMedia&&(window.matchMedia("(hover: none)").matches||window.matchMedia("(max-width: 1024px)").matches));
 const BOARD_SVG=document.documentElement.dataset.boardEngine==="svg";
@@ -2579,7 +2566,7 @@ function endChalk(e){
 
 function routeLabel(key,arg){if(key==="project"){const p=PROJECTS.find(x=>x.id===String(arg).padStart(2,"0"));return p?p.name:`project ${arg}`}return modeLabel(key)}
 function updateDesktopChrome(key,arg){
-  const path=routePath(key,arg),label=routeLabel(key,arg);if(appTitle)appTitle.textContent=label;if(windowPath)windowPath.innerHTML=`<b>${escapeHtml(path)}</b>`;if(mobileRouteTitle)mobileRouteTitle.textContent=label;
+  const path=routePath(key,arg),label=routeLabel(key,arg);if(windowPath)windowPath.innerHTML=`<b>${escapeHtml(path)}</b>`;if(mobileRouteTitle)mobileRouteTitle.textContent=label;
 }
 function toggleTerminal(force){const shell=document.getElementById("shell"),open=force!==undefined?force:shell.dataset.terminal!=="open";shell.dataset.terminal=open?"open":"closed";if(open){setTimeout(()=>input.focus(),60)}else{input.blur();suggest.innerHTML=""}}
 let activitiesReturnFocus=null,uiReturnFocus=null;
@@ -2684,7 +2671,7 @@ function resetPrefs(typed){PREFS=Object.assign({},DEFAULT_PREFS);savePrefs();app
 
 function runCommand(raw){
   const typed=raw.trim();if(!typed)return;
-  cmdHistory.push(typed);histIndex=cmdHistory.length;sessionN++;if(sessionCount)sessionCount.textContent=String(sessionN).padStart(2,"0");
+  cmdHistory.push(typed);if(cmdHistory.length>100)cmdHistory=cmdHistory.slice(-100);histIndex=cmdHistory.length;sessionN++;
   ssSet("arka_history",JSON.stringify(cmdHistory));ssSet("arka_session",String(sessionN));
   const esc=escapeHtml(typed);
   if(typed.toLowerCase()==="sudo rm -rf /"||typed.toLowerCase()==="\\sudo rm -rf /"){paint(esc,`${pageHead("root","Permission denied")}<div class="err ln">PERMISSION DENIED: This incident will be reported.</div>`,null);afterRun();return}
@@ -2769,7 +2756,7 @@ document.addEventListener("keydown",e=>{
   if(gPending){const k=e.key.toLowerCase();gPending=false;clearTimeout(gTimer);if(k==="h")navigate({key:"home"});else if(k==="p")navigate({key:"projects"});else if(k==="a")navigate({key:"about"})}
 });
 
-function tick(){const el=document.getElementById("clock"),top=document.getElementById("clockTop");const d=new Date(),p=n=>String(n).padStart(2,"0");if(el)el.textContent=`${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`;if(top)top.textContent=`${p(d.getHours())}:${p(d.getMinutes())}`}
+function tick(){const el=document.getElementById("clock");if(!el)return;const d=new Date(),p=n=>String(n).padStart(2,"0");el.textContent=`${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`}
 tick();setInterval(tick,1000);
 
 function boot(){
@@ -2848,7 +2835,7 @@ function init(){
   uiSwitchMenu?.addEventListener("keydown",e=>{if(e.key==="ArrowDown"||e.key==="ArrowUp"){e.preventDefault();const opts=[...uiSwitchMenu.querySelectorAll(".interface-option")],i=opts.indexOf(document.activeElement),d=e.key==="ArrowDown"?1:-1;opts[(i+d+opts.length)%opts.length]?.focus();return}trapFocus(e,uiSwitchMenu,()=>closeInterfaceMenu())});
   activitiesOverlay?.addEventListener("keydown",e=>trapFocus(e,activitiesOverlay,()=>toggleActivities(false)));
   if(!introOpened)maybeDiscoverGear();
-  activitiesBtn?.addEventListener("click",()=>toggleActivities());statusActivities?.addEventListener("click",()=>toggleActivities());activitiesClose?.addEventListener("click",()=>toggleActivities(false));mobileExploreBtn?.addEventListener("click",()=>toggleActivities(true));mobileExploreNavBtn?.addEventListener("click",()=>toggleActivities(true));
+  statusActivities?.addEventListener("click",()=>toggleActivities());activitiesClose?.addEventListener("click",()=>toggleActivities(false));mobileExploreBtn?.addEventListener("click",()=>toggleActivities(true));mobileExploreNavBtn?.addEventListener("click",()=>toggleActivities(true));
   terminalBtn?.addEventListener("click",()=>toggleTerminal());statusTerminal?.addEventListener("click",()=>toggleTerminal());terminalClose?.addEventListener("click",()=>toggleTerminal(false));
   launcherInput?.addEventListener("input",()=>{launcherIndex=0;renderLauncher(launcherInput.value)});
   launcherInput?.addEventListener("keydown",e=>{const count=launcherResults.querySelectorAll(".launcher-result").length;if(e.key==="ArrowDown"){e.preventDefault();launcherIndex=Math.min(count-1,launcherIndex+1);renderLauncher(launcherInput.value)}else if(e.key==="ArrowUp"){e.preventDefault();launcherIndex=Math.max(0,launcherIndex-1);renderLauncher(launcherInput.value)}else if(e.key==="Enter"){e.preventDefault();openLauncherSelection()}else if(e.key==="Escape"){e.preventDefault();toggleActivities(false)}});
@@ -2856,6 +2843,6 @@ function init(){
 }
 init();
 </script>
-  <script src="arka-os.js?v=20261109-final-lowercase-a"></script>
+  <script src="arka-os.js?v=20261109-maintenance"></script>
 </body>
 </html>

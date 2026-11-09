@@ -315,12 +315,7 @@ html[data-interface="distro"] .shell[data-home="true"] .stage{grid-template-rows
 @media(max-width:800px){html[data-interface="distro"] .shell[data-home="true"] .workspace{grid-template-columns:minmax(0,1fr)!important}html[data-interface="distro"] .shell[data-home="true"] .navigator{display:none!important}}
 
 
-/* ARKA/OS v9 — Linux-inspired product-manager desktop, Source Code Pro throughout Distro. */
-html[data-interface="distro"]{
-  --os-mono:"Source Code Pro",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-  --os-bg:#080d0c;--os-panel:#101917;--os-hi:#b9ff90;--os-text:#e5f2e9;
-  --os-muted:#a0b7a8;--os-line:#2b4434;--os-inset:#0e1713;
-}
+/* Distro typography and navigation refinements. */
 html[data-interface="distro"] body,
 html[data-interface="distro"] body *,
 html[data-interface="distro"] #pagebody,
@@ -336,158 +331,25 @@ html[data-interface="distro"] .intro-gate *{font-family:"Figtree",system-ui,sans
 html[data-interface="distro"] .window-frame{background:#0e1712!important}
 html[data-interface="distro"] .window-titlebar{background:#111e16!important;border-color:#33513e!important}
 html[data-interface="distro"] .navigator{background:#0b130f!important;border-color:#2c4436!important}
-html[data-interface="distro"] .nav-item.active{background:rgba(181,255,140,.07)!important;border-color:var(--os-hi)!important}
+html[data-interface="distro"] .nav-item.active{background:rgba(181,255,140,.07)!important;border-color:#b9ff90!important}
 html[data-interface="distro"] .ide-entry-type{color:#e5ba7a}
 html[data-interface="distro"] .ide-explorer-project{color:#daefda}
 html[data-interface="distro"] .ide-editor,
 html[data-interface="distro"] .ide-workbench{background:#0e1713}
 html[data-interface="distro"] .ide-tab.active{background:#122017}
 html[data-interface="distro"] .statusline{background:#1b3b24!important;border-color:#4a754e}
-html[data-interface="distro"] :is(.ide-workbench,.ide-list-view) :is(button,a):focus-visible,
-html[data-interface="distro"] .os-home :is(button,a):focus-visible{outline:2px solid var(--os-hi)!important;outline-offset:3px}
+html[data-interface="distro"] :is(.ide-workbench,.ide-list-view) :is(button,a):focus-visible{outline:2px solid #b9ff90!important;outline-offset:3px}
 html[data-interface="distro"] .ide-list-header h1{font-size:clamp(29px,3.7vw,44px)!important}
 html[data-interface="distro"] .ide-line h1{font-size:clamp(34px,4.5vw,57px)!important}
 html[data-interface="distro"] .ide-row-detail{font-size:12px}
 html[data-interface="distro"] .ide-editor-foot{font-size:10px}
-.os-home{min-height:100%;width:100%;background:var(--os-bg);color:var(--os-text);display:flex;flex-direction:column}
-.os-desktop-bar{
-  display:flex;align-items:center;justify-content:space-between;gap:15px;
-  min-height:42px;padding:11px 25px;background:#14231a;border-bottom:1px solid #375441;
-  font:600 10px/1.3 var(--os-mono);color:#aec8b4;letter-spacing:.04em;
-}
-.os-desktop-brand{display:inline-flex;align-items:center;gap:10px;color:var(--os-hi);font-weight:700;font-size:12px}
-.os-desktop-brand i{display:block;width:9px;height:9px;border:2px solid var(--os-hi);border-radius:2px;transform:rotate(-8deg)}
-.os-live-clock{font:600 11px var(--os-mono);font-variant-numeric:tabular-nums;color:#e8f7e4}
-.os-desktop-body{padding:clamp(20px,2.7vw,39px) clamp(19px,3.3vw,44px) 35px;max-width:1490px;width:100%;margin:auto;flex:1}
-.os-hero{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);gap:14px;align-items:stretch}
-.os-console,.os-map{min-width:0;border:1px solid var(--os-line);background:var(--os-panel);overflow:hidden}
-.os-console{box-shadow:0 10px 35px rgba(0,0,0,.13)}
-.os-console-header,.os-map-header{
-  display:flex;align-items:center;justify-content:space-between;gap:12px;
-  padding:14px 18px;min-height:43px;border-bottom:1px solid var(--os-line);
-  background:#18261b;font:600 10px/1.3 var(--os-mono);color:#b0cdb3;letter-spacing:.025em;
-}
-.os-console-header span:first-child{color:#d5f4d2}
-.os-console-main{padding:clamp(24px,3.8vw,47px) clamp(20px,3.3vw,40px) 29px}
-.os-command{font-size:13px!important;color:#c3dbc2!important;margin:0 0 14px!important}
-.os-command b{color:var(--os-hi);margin-right:7px}
-html[data-interface="distro"] #pagebody .os-logo{
-  font:750 clamp(54px,8.6vw,112px)/1 "Source Code Pro",monospace!important;
-  color:#e9f8e8;letter-spacing:-.1em;margin:0 0 18px;white-space:nowrap;
-  text-shadow:1px 0 0 rgba(185,255,144,.12);
-}
-.os-logo span:first-child{color:var(--os-hi)}
-.os-cursor{display:inline-block;color:var(--os-hi);animation:osCaret 1.1s steps(1,end) infinite}
-@keyframes osCaret{50%{opacity:0}}
-html[data-interface="distro"] #pagebody .os-console h1{
-  font:650 clamp(17px,2vw,25px)/1.25 "Source Code Pro",monospace!important;
-  letter-spacing:-.038em!important;color:var(--os-text)!important;margin:0 0 9px;
-}
-.os-role{font-size:clamp(11px,1.25vw,13px)!important;line-height:1.55!important;color:#b9ff9d!important;margin:0 0 27px!important;max-width:62ch}
-.os-role span{color:#667c6d}
-.os-bio{font-size:clamp(12px,1.2vw,13px)!important;line-height:1.85!important;color:#c2d4c6!important;max-width:58ch;margin:0 0 31px!important}
-.os-console-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:28px}
-.os-console-actions button{
-  min-height:44px;border:1px solid #5f8d61;border-radius:4px;padding:12px 15px;
-  font:600 11px/1.35 var(--os-mono);cursor:pointer;transition:background .16s ease,color .16s ease,border-color .16s ease;
-}
-.os-primary{background:var(--os-hi);color:#0c1b11;border-color:var(--os-hi)!important}
-.os-primary:hover{background:#d8ffc2}
-.os-secondary{background:#18281d;color:#d7ead3}
-.os-secondary:hover{border-color:#a7d294}
-.os-help{display:inline-flex;align-items:center;gap:10px;padding:10px 0;border:0;background:transparent;color:#b8cdb6;font:500 11px/1.5 var(--os-mono);cursor:pointer;text-align:left}
-.os-help span:first-child{color:var(--os-hi)}
-.os-help:hover{color:var(--os-hi)}
-.os-map{background:#0e1913}
-.os-map-header{background:#122117}
-.os-map h2{
-  margin:clamp(26px,3.5vw,43px) 23px 13px!important;
-  font:700 clamp(18px,2.2vw,28px)/1.24 var(--os-mono)!important;
-  letter-spacing:-.065em!important;max-width:28ch;color:#eaf5e9!important;text-wrap:balance;
-}
-.os-map>p{color:#b3cbb6!important;font:450 12px/1.8 var(--os-mono)!important;max-width:54ch;margin:0 23px 36px!important}
-.os-topology{display:grid;grid-template-columns:minmax(0,1fr) 10px minmax(0,1fr) 10px minmax(0,1fr) 10px minmax(0,1fr);align-items:center;gap:0;padding:0 14px;margin:0 0 35px}
-.os-node{
-  display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;
-  min-height:128px;min-width:0;gap:9px;padding:13px 10px;background:#15241a;
-  border:1px solid #49664b;border-radius:3px;color:#e9f3e7;cursor:pointer;text-align:left;
-  transition:background .15s ease,border-color .15s ease,transform .15s ease;
-}
-.os-node:hover,.os-node:focus-visible{background:#213823;border-color:var(--os-hi);transform:translateY(-2px)}
-.os-node small{color:var(--os-hi);font:600 10px/1.3 var(--os-mono);font-variant-numeric:tabular-nums}
-.os-node strong{font:650 11px/1.25 var(--os-mono);overflow-wrap:anywhere}
-.os-node span{color:#abc4ae;font:400 9px/1.45 var(--os-mono);overflow-wrap:anywhere}
-.os-edge{height:2px;position:relative;background:#577b59;min-width:6px;overflow:hidden}
-.os-edge i{position:absolute;inset:0 auto 0 0;width:36%;background:var(--os-hi);animation:osSignal 2.4s ease-in-out infinite}
-@keyframes osSignal{0%{transform:translateX(-140%)}80%,100%{transform:translateX(400%)}}
-.os-map-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:17px 22px;border-top:1px solid #294033}
-.os-map-legend{font:400 10px/1.4 var(--os-mono);color:#a4bea8}
-.os-map-foot button{font:600 11px/1.4 var(--os-mono);background:none;border:0;color:var(--os-hi);cursor:pointer}
-.os-proof,.os-lower{margin-top:28px}
-.os-section-title{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px;font:650 11px/1.4 var(--os-mono);color:#dcecdc}
-.os-section-title small{font:500 10px/1.4 var(--os-mono);color:#91ad97}
-.os-section-title button{font:550 11px/1.4 var(--os-mono);border:0;background:none;color:var(--os-hi);cursor:pointer}
-.os-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:#2b4433;border:1px solid #2b4433}
-.os-metric{min-height:126px;padding:20px 15px;background:#101b14;display:flex;flex-direction:column;gap:5px}
-.os-metric small{font:500 10px/1.1 var(--os-mono);color:#9ab6a0;font-variant-numeric:tabular-nums}
-.os-metric strong{font:680 clamp(20px,2.45vw,34px)/1.3 var(--os-mono);letter-spacing:-.065em;color:#eafce8;font-variant-numeric:tabular-nums}
-.os-metric>span{font:500 11px/1.4 var(--os-mono);color:#d3e6d1}
-.os-metric em{font:400 10px/1.4 var(--os-mono);font-style:normal;color:#8fa995}
-.os-module-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-.os-module{display:grid;grid-template-columns:38px minmax(0,1fr) 16px;grid-template-rows:auto auto;gap:4px 14px;align-items:center;text-align:left;min-height:83px;padding:17px 15px;border:1px solid #294434;background:#121f16;cursor:pointer;color:#ddeede;transition:background .16s ease,border-color .16s ease}
-.os-module:hover,.os-module:focus-visible{background:#1d3020;border-color:#699469}
-.os-module>span{font:500 11px var(--os-mono);color:var(--os-hi);grid-row:1/3}
-.os-module>strong{font:600 12px/1.45 var(--os-mono);grid-column:2;grid-row:1}
-.os-module>small{font:450 10px/1.6 var(--os-mono);color:#aac0ad;grid-column:2;grid-row:2}
-.os-module>b{font:400 16px var(--os-mono);color:var(--os-hi);grid-column:3;grid-row:1/3}
-.os-footline{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px solid #274330;padding:14px 24px;background:#0d1710;color:#91a994;font:500 9px/1.5 var(--os-mono)}
 /* Maintains terminal typography in all Distro pages and dialogs. */
 html[data-interface="distro"] .ide-workbench :is(.ide-line h1,.ide-job,.ide-summary-line p,.ide-file-content strong,.ide-file-content small,.ide-inline-actions button),
 html[data-interface="distro"] .ide-list-view :is(.ide-list-header h1,.ide-list-header p,.ide-row-name,.ide-row-detail),
 html[data-interface="distro"] #pagebody :is(h1,h2,h3,p,span,li,dd,dt,button,strong,small,code,a){
   font-family:"Source Code Pro",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace!important
 }
-html[data-interface="distro"] .os-home :is(h1,h2,h3,p,span,li,dd,dt,button,strong,small,code,a){font-family:var(--os-mono)!important}
-@media(max-width:1150px){
-  .os-hero{grid-template-columns:1fr}
-  .os-console-main{padding:28px}
-  .os-topology{padding:0 23px}
-}
-@media(max-width:800px){
-  .os-desktop-body{padding:20px 14px 35px}
-  .os-desktop-bar{padding:10px 13px}
-  .os-desktop-bar>span:nth-child(2){display:none}
-  .os-map h2{margin:25px 17px 12px!important}
-  .os-map>p{margin:0 17px 22px!important}
-  .os-topology{padding:0 13px}
-  .os-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .os-module-grid{grid-template-columns:1fr}
-}
-@media(max-width:520px){
-  html[data-interface="distro"] #pagebody .os-logo{font-size:clamp(49px,13vw,71px)!important}
-  .os-console-main{padding:24px 16px 21px}
-  .os-console-actions button{width:100%}
-  .os-topology{grid-template-columns:1fr;margin-bottom:15px}
-  .os-node{min-height:auto;display:grid;grid-template-columns:30px minmax(0,1fr);grid-template-rows:auto auto;gap:3px 9px;padding:12px 13px}
-  .os-node small{grid-column:1;grid-row:1/3}
-  .os-node strong{grid-column:2;grid-row:1;font-size:12px}
-  .os-node span{grid-column:2;grid-row:2;font-size:10px}
-  .os-edge{height:12px;width:2px;justify-self:20px;min-height:10px}
-  .os-edge i{width:100%;height:35%;animation:osSignalMobile 2.2s ease-in-out infinite}
-  @keyframes osSignalMobile{0%{transform:translateY(-180%)}100%{transform:translateY(400%)}}
-  .os-metric{min-height:115px;padding:14px 11px}
-  .os-map-foot{flex-direction:column;align-items:flex-start}
-  .os-footline{padding:12px}
-  .os-proof,.os-lower{margin-top:25px}
-}
-@media(prefers-reduced-motion:reduce){
-  .os-cursor,.os-edge i{animation:none!important}
-  .os-node,.os-module,.os-console-actions button{transition:none!important;transform:none!important}
-}
-html[data-motion="off"] .os-cursor,html[data-motion="off"] .os-edge i{animation:none!important}
-
-
-/* ARKA.OS 9.1: focused portfolio entrance and properly styled source breadcrumbs. */
+/* File breadcrumbs for secondary portfolio routes. */
 html[data-interface="distro"] #pagebody .ide-file-context{
  display:flex!important;flex-wrap:wrap;align-items:center;gap:9px;
  margin:0 0 25px;padding:0 0 13px;border-bottom:1px solid #284032;
