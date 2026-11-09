@@ -1586,3 +1586,17 @@ html .intro-boot{inset:0!important}
   html .intro-boot-log-line{margin:2px 0}
   html .intro-boot-console{padding:12px}
 }
+
+/* Focusable project actions and failure-only startup recovery. */
+.filetable .file-project-link{
+  display:inline-flex;align-items:center;min-height:44px;max-width:100%;
+  border:0;background:transparent;padding:5px 0;
+  color:inherit;font:inherit;font-weight:inherit;text-align:left;
+  cursor:pointer;white-space:normal;overflow-wrap:anywhere;
+}
+.filetable .file-project-link:hover{color:var(--phosphor);text-decoration:underline;text-underline-offset:4px}
+.filetable .file-project-link:focus-visible{outline:2px solid var(--phosphor);outline-offset:3px;border-radius:2px}
+.intro-recovery{margin-top:16px;color:#e1f0e2;font:500 13px/1.5 "Figtree",system-ui,sans-serif}
+.intro-recovery p{margin:0 0 12px}
+.intro-reload{min-height:44px;padding:10px 20px;border:1px solid #8fca98;border-radius:4px;background:#183020;color:#e9fff0;cursor:pointer}
+.intro-reload:focus-visible{outline:2px solid #b9ff90;outline-offset:3px}

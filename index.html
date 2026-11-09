@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-GB" data-build="2026-11-09-maintenance">
+<html lang="en-GB" data-build="2026-11-09-interaction-reliability">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -214,7 +214,7 @@ a.link{color:var(--cyan);text-decoration:none;border-bottom:1px solid transparen
 .filetable{width:100%;border-collapse:collapse;font-size:13px}
 .filetable th{text-align:left;color:var(--faint);font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:500;border-bottom:1px solid var(--line);padding:7px 8px}
 .filetable td{border-bottom:1px solid rgba(28,41,32,.62);padding:11px 8px;color:var(--text);vertical-align:top}
-.filetable tr[data-cmd]{cursor:pointer}.filetable tr[data-cmd]:hover td{background:var(--soft)}
+.filetable tbody tr:hover td{background:var(--soft)}
 .filetable .id{color:var(--amber);width:48px}.filetable .name{color:var(--fg);font-weight:650;min-width:160px}.filetable .action{color:var(--phosphor);white-space:nowrap;width:86px}
 .project-nav{display:flex;justify-content:space-between;gap:18px;margin-top:28px;padding-top:13px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
 
@@ -1737,7 +1737,7 @@ html[data-intro="open"] .intro-gate{display:flex}
      pointer targets allowed through are the two audience buttons. */
   const introOpen=()=>document.documentElement.dataset.intro==="open";
   const insideIntro=t=>!!(t&&document.getElementById("introGate")?.contains(t));
-  const isChoiceTarget=t=>!!(t&&t.closest&&t.closest("[data-intro-interface]"));
+  const isChoiceTarget=t=>!!(t&&t.closest&&t.closest("[data-intro-interface],.intro-reload"));
   const block=e=>{if(e.cancelable)e.preventDefault();e.stopImmediatePropagation();e.stopPropagation()};
   // Let the dialog scroll on short mobile screens, but never pass events to the workspace.
   ["pointermove","mousemove","touchmove","wheel","pointerdown","pointerup","mousedown","mouseup","touchstart","touchend"].forEach(type=>
@@ -1751,11 +1751,24 @@ html[data-intro="open"] .intro-gate{display:flex}
     const gate=document.getElementById("introGate");
     if(gate&&gate.contains(e.target))return;
     block(e);
-    requestAnimationFrame(()=>document.querySelector("[data-intro-interface]")?.focus());
+    requestAnimationFrame(()=>document.querySelector(".intro-reload:not([disabled]),[data-intro-interface]:not([disabled])")?.focus());
   },true);
+  // Recovery is independent of the portfolio runtime and can still offer a reload if it fails.
+  document.addEventListener("DOMContentLoaded",()=>setTimeout(()=>{
+    if(document.documentElement.dataset.intro!=="open"||document.documentElement.dataset.appReady==="true")return;
+    const content=document.querySelector("#introGate .intro-content");
+    if(!content||content.querySelector(".intro-recovery"))return;
+    const recovery=document.createElement("div");recovery.className="intro-recovery";recovery.setAttribute("role","alert");
+    const message=document.createElement("p");message.textContent="The portfolio did not start correctly.";
+    const reload=document.createElement("button");reload.type="button";reload.className="intro-reload";reload.textContent="Reload";
+    reload.addEventListener("click",()=>location.reload());
+    recovery.append(message,reload);content.append(recovery);
+    document.querySelectorAll("#introGate [data-intro-interface]").forEach(b=>b.disabled=true);
+    reload.focus();
+  },4500),{once:true});
 })();
 </script>
-  <link rel="stylesheet" href="arka-os.css?v=20261109-maintenance">
+  <link rel="stylesheet" href="arka-os.css?v=20261109-interaction-reliability">
 </head>
 <body>
 <div class="intro-gate" id="introGate" role="dialog" aria-modal="true" aria-labelledby="introTitle" aria-hidden="true" data-booting="false">
@@ -2018,7 +2031,7 @@ const sections={
     const rows=orderedProjects().filter(p=>f==="all"||p.tags.includes(f));
     return `${pageHead("work/projects",isGreenboard()?"Learning work":"Products & systems",isGreenboard()?"Same projects. Here, the learning decisions come first.":"Same projects. Here, the product decisions come first.")}
       <div class="filterline ln">${PROJECT_FILTERS.map(k=>`<button class="filter ${f===k?"active":""}" type="button" data-cmd="projects ${k}">${k}</button>`).join("")}</div>
-      <div class="ln"><table class="filetable"><thead><tr><th>ID</th><th>NAME</th><th>DESCRIPTION</th><th>ACTION</th></tr></thead><tbody>${rows.map(p=>`<tr data-cmd="open ${p.id}"><td class="id">${p.id}</td><td class="name">${p.name}${badge(p)}</td><td class="desc">${p.desc}</td><td class="action">open ${p.id}</td></tr>`).join("")}</tbody></table></div>
+      <div class="ln"><table class="filetable"><thead><tr><th>ID</th><th>NAME</th><th>DESCRIPTION</th><th>ACTION</th></tr></thead><tbody>${rows.map(p=>`<tr><td class="id">${p.id}</td><td class="name"><button class="file-project-link" type="button" data-cmd="open ${p.id}" aria-label="Open ${escapeHtml(p.name)}">${escapeHtml(p.name)}</button>${badge(p)}</td><td class="desc">${p.desc}</td><td class="action" aria-hidden="true">open ${p.id}</td></tr>`).join("")}</tbody></table></div>
       ${bridge("experience","professional timeline")}`;
   }},
 
@@ -2667,7 +2680,7 @@ function renderSettings(typed,msg=""){paint(typed,sections.settings.render(msg),
 function handleTheme(arg,typed){if(arg&&THEMES[arg]){PREFS.theme=arg;savePrefs();applyPrefs();renderSettings(typed,`theme: ${arg}`)}else if(!arg)navigate({key:"settings"},{typed});else paint(typed,errorPage(`unknown theme: ${escapeHtml(arg)}.`),null)}
 function handleFont(arg,typed){const map={small:"small",normal:"normal",default:"normal",medium:"normal",large:"large",big:"large"};if(arg&&map[arg]){PREFS.font=map[arg];savePrefs();applyPrefs();updateCursor();renderSettings(typed,`font: ${map[arg]}`)}else paint(typed,errorPage("usage: font small|normal|large"),null)}
 function handleSwitch(name,arg,typed){if(arg==="on"||arg==="off")PREFS[name]=arg;else if(!arg||arg==="toggle")PREFS[name]=PREFS[name]==="on"?"off":"on";else{paint(typed,errorPage(`usage: ${name} on|off`),null);return}savePrefs();applyPrefs();renderSettings(typed,`${name}: ${PREFS[name]}`)}
-function resetPrefs(typed){PREFS=Object.assign({},DEFAULT_PREFS);savePrefs();applyPrefs();resizeChalkCanvas(true);stopChalkSound();updateCursor();renderSettings(typed,"defaults restored")}
+function resetPrefs(typed){PREFS=Object.assign({},DEFAULT_PREFS);savePrefs();setInterface(PREFS.interface,{persist:false,announce:false});stopChalkSound();updateCursor();renderSettings(typed,"defaults restored")}
 
 function runCommand(raw){
   const typed=raw.trim();if(!typed)return;
@@ -2746,6 +2759,7 @@ document.addEventListener("touchmove",e=>{if(PREFS.interface==="greenboard"&&(ch
 
 let gPending=false,gTimer=null;
 document.addEventListener("keydown",e=>{
+  if(introIsOpen())return;
   const tag=document.activeElement?.tagName?.toLowerCase();const editing=tag==="input"||tag==="textarea"||document.activeElement?.isContentEditable;
   if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="k"){e.preventDefault();toggleActivities();return}
   if(e.ctrlKey&&e.key==="`"){e.preventDefault();toggleTerminal();return}
@@ -2824,6 +2838,7 @@ function init(){
   introChoices.forEach(b=>b.addEventListener("click",()=>chooseIntro(b.dataset.introInterface)));
   introGate?.addEventListener("keydown",e=>{if(e.key==="Escape"){e.preventDefault();return}trapFocus(e,introGate,()=>{})});
   const introOpened=openIntroIfNeeded();
+  document.documentElement.dataset.appReady="true";
   if(introOpened)requestAnimationFrame(()=>introChoices[0]?.focus());
   uiSwitchToggle?.addEventListener("click",e=>{
     e.stopPropagation();if(BOARD_HANDHELD)restBoardTools();dismissGearDiscovery();const open=uiSwitcher?.dataset.open!=="true";
