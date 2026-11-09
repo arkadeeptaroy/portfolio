@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-GB" data-build="2026-11-09-product-only-boot">
+<html lang="en-GB" data-build="2026-11-09-original-ascii-mark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -1760,7 +1760,7 @@ html[data-intro="open"] .intro-gate{display:flex}
   },true);
 })();
 </script>
-  <link rel="stylesheet" href="arka-os.css?v=11.0.5">
+  <link rel="stylesheet" href="arka-os.css?v=20261109-ascii-a-r2">
 </head>
 <body>
 <div class="intro-gate" id="introGate" role="dialog" aria-modal="true" aria-labelledby="introTitle" aria-hidden="true" data-booting="false">
@@ -1784,24 +1784,7 @@ html[data-intro="open"] .intro-gate{display:flex}
         </div>
         <div class="intro-boot-layout">
           <div class="intro-boot-identity">
-            <pre class="intro-boot-mark" aria-hidden="true">                ██████
-               ██    ██
-              ██      ██
-             ██        ██
-            ██          ██
-           ██            ██
-          ██              ██
-         ██                ██
-        ██████████████████████
-       ██                    ██
-      ██                      ██
-     ██                        ██
-    ██                          ██
-   ██                            ██
-  ██                              ██
- ██                                ██
-██                                  ██
-██                                  ██</pre>
+            <pre class="intro-boot-mark" id="introBootMark" aria-hidden="true"></pre>
             <div class="intro-boot-brand">ARKA<span>.OS</span><small>PERSONAL PORTFOLIO SYSTEM</small></div>
           </div>
           <div class="intro-boot-log" aria-hidden="true">
@@ -1924,7 +1907,7 @@ html[data-intro="open"] .intro-gate{display:flex}
 <script>
 "use strict";
 
-const NAME_ASCII=["                ██████","               ██    ██","              ██      ██","             ██        ██","            ██          ██","           ██            ██","          ██              ██","         ██                ██","        ██████████████████████","       ██                    ██","      ██                      ██","     ██                        ██","    ██                          ██","   ██                            ██","  ██                              ██"," ██                                ██","██                                  ██","██                                  ██"].join("\n");
+const NAME_ASCII=["                    .^.","                   /oOo\\","                  /o++Oo\\","                 /o+oo+Oo\\","                /o+o   o+o\\","               /o+o     o+o\\","              /o+o       o+o\\","             /o+o         o+o\\","            /o+o           o+o\\","           /o+o:::::::::==::o+o\\","          /o+o===============o+o\\","         /o+o+++++++++++++++++o+o\\","        /o+o                   o+o\\","       /o+o                     o+o\\","      /o+o                       o+o\\","     /o+o                         o+o\\","    /o+o                           o+o\\","   /o+o                             o+o\\","  /o+o                               o+o\\"].join("\n");
 
 const DEFAULT_PREFS={theme:"green",crt:"off",motion:"on",font:"normal",interface:"distro",sfx:"on",chalk:"on"};
 const THEMES={green:{bg:"#050706",note:"green"}};
@@ -2833,6 +2816,7 @@ function dismissGearDiscovery(){if(!uiSwitcher)return;uiSwitcher.classList.remov
 function maybeDiscoverGear(){if(introIsOpen()||!uiSwitcher||lsGet("arka_gear_discovered")||ssGet("arka_gear_discovered"))return;setTimeout(()=>{if(uiSwitcher.dataset.open!=="true")uiSwitcher.classList.add("discovery")},650);setTimeout(()=>dismissGearDiscovery(),5200)}
 function closeInterfaceMenu({restore=true}={}){if(!uiSwitcher)return;uiSwitcher.dataset.open="false";uiSwitchToggle?.setAttribute("aria-expanded","false");uiSwitchMenu?.setAttribute("aria-hidden","true");if(restore&&uiReturnFocus&&document.contains(uiReturnFocus))uiReturnFocus.focus();uiReturnFocus=null}
 function init(){
+  document.getElementById("introBootMark").textContent=NAME_ASCII;
   boot();applyPrefs();resizeChalkCanvas(false);updateCursor();
   introChoices.forEach(b=>b.addEventListener("click",()=>chooseIntro(b.dataset.introInterface)));
   introGate?.addEventListener("keydown",e=>{if(e.key==="Escape"){e.preventDefault();return}trapFocus(e,introGate,()=>{})});
@@ -2856,6 +2840,6 @@ function init(){
 }
 init();
 </script>
-  <script src="arka-os.js?v=11.0.5"></script>
+  <script src="arka-os.js?v=20261109-ascii-a-r2"></script>
 </body>
 </html>
