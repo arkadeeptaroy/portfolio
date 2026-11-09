@@ -32,8 +32,7 @@
     const selected=FOCUS_ITEMS[0];
     return '<div class="ark-command-center" aria-label="ARKA.OS product-management command center">'+
       '<header class="ark-menubar"><div class="ark-menubar-id"><span class="ark-mini-logo" aria-hidden="true">a</span><strong>ARKA.OS</strong><span class="ark-menu-divider">/</span><span>PORTFOLIO</span></div>'+
-      '<div class="ark-menubar-right"><span class="ark-visit-label">SITE VISITS <strong id="arkVisitNumber" aria-live="polite">Loading</strong></span>'+
-      '<span class="ark-menubar-sep" aria-hidden="true"></span><span class="ark-session-time" id="arkSessionTime" aria-label="Current session duration">00:00</span>'+
+      '<div class="ark-menubar-right"><span class="ark-session-time" id="arkSessionTime" aria-label="Current session duration">00:00</span>'+
       '<span class="ark-menubar-sep" aria-hidden="true"></span><span class="ark-local-clock" id="osDesktopClock">--:--</span></div></header>'+
       '<div class="ark-workspace-main"><div class="ark-main-columns">'+
       '<section class="ark-terminal" aria-label="Working portfolio terminal"><div class="ark-window-chrome"><span class="ark-window-dots" aria-hidden="true"><i></i><i></i><i></i></span><span>arka@os:~/profile</span><span class="ark-window-type">TTY / 01</span></div>'+
@@ -151,35 +150,6 @@
   });
 
 
-  // Public visit count, recorded once per browser tab session; not unique people.
-  const VISIT_ENDPOINT='https://countapi.mileshilliard.com/api/v1/';
-  const VISIT_KEY='arkadeeptaroy-portfolio-site-visits-v1';
-  const VISIT_SESSION_KEY='arka_os_visit_recorded_v1';
-  let remoteVisits=null,visitStatus='loading';
-  function renderVisitCount(){
-    const el=$('#arkVisitNumber');if(!el)return;
-    if(visitStatus==='ok'&&Number.isSafeInteger(remoteVisits)){
-      el.textContent=remoteVisits.toLocaleString();
-      el.title='Page visits counted since launch. Not unique people.';
-    }else{
-      el.textContent=visitStatus==='loading'?'Loading':'Unavailable';
-      el.title='The external visitor counter is unavailable.';
-    }
-  }
-  async function syncVisits(){
-    const already=(()=>{try{return sessionStorage.getItem(VISIT_SESSION_KEY)==='1'}catch(_){return false}})();
-    const action=already?'get':'hit';
-    try{
-      const response=await fetch(VISIT_ENDPOINT+action+'/'+VISIT_KEY,{method:'GET',mode:'cors',cache:'no-store',credentials:'omit'});
-      if(!response.ok)throw new Error('Counter unavailable');
-      const payload=await response.json();
-      const n=Number(payload&&payload.value);
-      if(!Number.isSafeInteger(n)||n<0)throw new Error('Invalid count');
-      remoteVisits=n;visitStatus='ok';
-      if(action==='hit')try{sessionStorage.setItem(VISIT_SESSION_KEY,'1')}catch(_){}
-    }catch(_){visitStatus='unavailable'}
-    renderVisitCount();
-  }
   const sessionStarted=Date.now();
   function updateSystemTime(){
     const clock=$('#osDesktopClock');
@@ -190,7 +160,6 @@
       timer.textContent=String(Math.floor(elapsed/60)).padStart(2,'0')+':'+String(elapsed%60).padStart(2,'0');
       timer.title='Current browser session duration';
     }
-    renderVisitCount();
   }
   function appendActivity(label){
     const log=$('#arkInteractionLog');if(!log)return;
@@ -237,12 +206,10 @@
   document.addEventListener('click',e=>{if(e.target.closest('[data-route],[data-cmd]'))queueMicrotask(updateSystemTime)});
   window.setInterval(updateSystemTime,1000);
   updateSystemTime();
-  syncVisits();
 
   renderExplorer();
   navigate(current,{fromPop:true,typed:"route"});
   updateSystemTime();
-  renderVisitCount();
   appendActivity('PROFILE / SESSION READY');
   document.documentElement.dataset.workbenchReady="true";
 })();
